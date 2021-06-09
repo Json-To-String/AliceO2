@@ -15,7 +15,6 @@ void standalone() {
   TGeoMaterial *vacMat = new TGeoMaterial("Vacuum",0,0,0);
   TGeoMedium   *vacMed = new TGeoMedium("Vacuum",1,vacMat);
 
-  // TGeoMaterial *airMat = new TGeoMaterial("Air",0,)
 
   Int_t isxfld = 2;     // magneticField->Integ();
   Float_t sxmgmx = 10.; // magneticField->Max();
@@ -68,7 +67,7 @@ void standalone() {
 
   Float_t pinstart[3] = {2.9491, 2.9491, 2.5};
   Float_t ptop[3] = {1.324, 1.324, 1.}; // Cherenkov radiator
-  Float_t ptopblack[3] = {1.324, 1.324, 0.0002}; // black paper on the top on radiator
+  //  Float_t ptopblack[3] = {1.324, 1.324, 0.0002}; // black paper on the top on radiator
   Float_t ptopref[3] = {1.3241, 1.3241, 1.}; // Cherenkov radiator wrapped with reflector
   Double_t prfv[3] = {0.0002, 1.323, 1.};    // Vertical refracting layer bettwen radiators and between radiator and not optical Air
   Double_t prfh[3] = {1.323, 0.0002, 1.};    // Horizontal refracting layer bettwen radiators and ...
@@ -96,13 +95,6 @@ void standalone() {
 
   // A side construction
 
-  // Float_t xa[NCellsA] = {-11.8, -5.9, 0, 5.9, 11.8, -11.8, -5.9, 0, 5.9, 11.8, -12.8, -6.9,
-  //                   6.9, 12.8, -11.8, -5.9, 0, 5.9, 11.8, -11.8, -5.9, 0, 5.9, 11.8};
-  //
-  // Float_t ya[NCellsA] = {11.9, 11.9, 12.9, 11.9, 11.9, 6.0, 6.0, 7.0, 6.0, 6.0, -0., -0.,
-  //                   0., 0., -6.0, -6.0, -7.0, -6.0, -6.0, -11.9, -11.9, -12.9, -11.9, -11.9};
-
-
   Float_t xa[NCellsA] = {-12.2, -6.1, 0, 6.1, 12.2, -12.2, -6.1, 0,
                                     6.1, 12.2, -13.3743, -7.274299999999999,
                                     7.274299999999999, 13.3743, -12.2, -6.1, 0,
@@ -112,24 +104,17 @@ void standalone() {
                                     7.43, 6.1, 6.1, 0, 0, 0, 0, -6.1, -6.1,
                                     -7.43, -6.1, -6.1, -12.2, -12.2, -13.53,
                                     -12.2, -12.2};
-
+  //
   TGeoVolumeAssembly* stlinA = new TGeoVolumeAssembly("0STL"); // A side mother
-
-  // Here I set the top volume to the A side mother, I might regret this when we
-  // need A and C side but for now it should work
-
-  gGeoManager->SetTopVolume(stlinA);
-
+  //
   // // FIT Interior
   // TVirtualMC::GetMC()->Gsvolu("0INS", "BOX", getMediumID(kAir), pinstart, 3);
   // TGeoVolume* ins = gGeoManager->GetVolume("0INS");
-  TGeoBBox* insBox = new TGeoBBox("insBox", pinstart[0], pinstart[1], pinstart[2]);
-  TGeoVolume* ins = new TGeoVolume("0INS", insBox, vacMed);
-
-  TGeoTranslation* tr[NCellsA + NCellsC];
-  TString nameTr;
-
-  // A side Translations
+  // //
+  // TGeoTranslation* tr[NCellsA + NCellsC];
+  // TString nameTr;
+  //
+  // // A side Translations
   // for (Int_t itr = 0; itr < NCellsA; itr++) {
   //   nameTr = Form("0TR%i", itr + 1);
   //   z = -pstartA[2] + pinstart[2];
@@ -138,139 +123,102 @@ void standalone() {
   //   stlinA->AddNode(ins, itr, tr[itr]);
   // }
 
-// Note that for the purposes of the standalone code we will be simulating things
-// of aluminum or vacuum to investigate overlaps
-
 
 //   // Entry window (glass)
 //   TVirtualMC::GetMC()->Gsvolu("0TOP", "BOX", getMediumID(kOpGlass), ptop, 3); // Glass radiator
 //   TGeoVolume* top = gGeoManager->GetVolume("0TOP");
 
-  TGeoBBox* topBox = new TGeoBBox("BOX", ptop[0], ptop[1], ptop[2]);
+  TGeoBBox* topBox = new TGeoBBox("topBox", ptop[0], ptop[1], ptop[2]);
   TGeoVolume* top = new TGeoVolume("0TOP", topBox, alMed);
+
+
+
 
 //   // TVirtualMC::GetMC()->Gsvolu("0TBL", "BOX", getMediumID(kOptBlack), ptopblack, 3); // Glass radiator
 //   //  TGeoVolume* topblack = gGeoManager->GetVolume("0TBL");
-  TGeoBBox* blackBox = new TGeoBBox("BOX", ptopblack[0], ptopblack[1], ptopblack[2]);
-  TGeoVolume* topblack = new TGeoVolume("0TBL", blackBox, alMed);
-
-
 //   TVirtualMC::GetMC()->Gsvolu("0TRE", "BOX", getMediumID(kAir), ptopref, 3); // Air: wrapped  radiator
 //   TGeoVolume* topref = gGeoManager->GetVolume("0TRE");
-  TGeoBBox* topRefBox = new TGeoBBox("BOX", ptopref[0], ptopref[1], ptopref[2]);
-  TGeoVolume* topref = new TGeoVolume("0TRE", topRefBox, vacMed);
-
 //   TVirtualMC::GetMC()->Gsvolu("0RFV", "BOX", getMediumID(kOptAl), prfv, 3); // Optical Air vertical
 //   TGeoVolume* rfv = gGeoManager->GetVolume("0RFV");
-
-  TGeoBBox* rfvBox = new TGeoBBox("BOX", prfv[0], prfv[1], prfv[2]);
-  TGeoVolume* rfv = new TGeoVolume("0RFV", rfvBox, alMed);
-
 //   TVirtualMC::GetMC()->Gsvolu("0RFH", "BOX", getMediumID(kOptAl), prfh, 3); // Optical Air horizontal
 //   TGeoVolume* rfh = gGeoManager->GetVolume("0RFH");
-
-  TGeoBBox* rfhBox = new TGeoBBox("BOX", prfh[0], prfh[1], prfh[2]);
-  TGeoVolume* rfh = new TGeoVolume("0RFH", rfhBox, alMed);
-
+//
 //   TVirtualMC::GetMC()->Gsvolu("0PAL", "BOX", getMediumID(kAl), pal, 3); // 5mm Al on top of the radiator
 //   TGeoVolume* altop = gGeoManager->GetVolume("0PAL");
-  TGeoBBox* alTopBox = new TGeoBBox("BOX", pal[0], pal[1], pal[2]);
-  TGeoVolume* altop = new TGeoVolume("0PAL", alTopBox, alMed);
-
 //
 //   TVirtualMC::GetMC()->Gsvolu("0REG", "BOX", getMediumID(kOpGlassCathode), preg, 3);
 //   TGeoVolume* cat = gGeoManager->GetVolume("0REG");
-
-  TGeoBBox* catBox = new TGeoBBox("BOX", preg[0], preg[1], preg[2]);
-  TGeoVolume* cat = new TGeoVolume("0REG", catBox, alMed);
-
-  //wrapped radiator +  reflecting layers
-
-  Int_t ntops = 0, nrfvs = 0, nrfhs = 0;
-  //  Float_t yin = 0, xinv = 0, yinv = 0;
-  x = y = z = 0;
-  topref->AddNode(top, 1, new TGeoTranslation(0, 0, 0));
-  float xinv = -ptop[0] - prfv[0];
-  topref->AddNode(rfv, 1, new TGeoTranslation(xinv, 0, 0));
-  printf(" GEOGEO  refv %f ,  0,0 \n", xinv);
-  xinv = ptop[0] + prfv[0];
-  topref->AddNode(rfv, 2, new TGeoTranslation(xinv, 0, 0));
-  printf(" GEOGEO  refv %f ,  0,0 \n", xinv);
-  float yinv = -ptop[1] - prfh[1];
-  topref->AddNode(rfh, 1, new TGeoTranslation(0, yinv, 0));
-  printf(" GEOGEO  refh  ,  0, %f, 0 \n", yinv);
-  yinv = ptop[1] + prfh[1];
-  topref->AddNode(rfh, 2, new TGeoTranslation(0, yinv, 0));
-  //  zin = -ptop[2] - ptopblack[2];
-  //  printf(" GEOGEO  refh  ,  0, 0, %f \n", zin);
-  //  topref->AddNode(topblack, 1, new TGeoTranslation(0, 0, zin));
-
-  //container for radiator, cathode
-  for (Int_t ix = 0; ix < 2; ix++) {
-    float xin = -pinstart[0] + 0.3 + (ix + 0.5) * 2 * ptopref[0];
-    for (Int_t iy = 0; iy < 2; iy++) {
-      z = -pinstart[2] + 2 * pal[2] + ptopref[2];
-      float yin = -pinstart[1] + 0.3 + (iy + 0.5) * 2 * ptopref[1];
-      ntops++;
-      ins->AddNode(topref, ntops, new TGeoTranslation(xin, yin, z));
-      z += ptopref[2] + 2. * pmcptopglass[2] + preg[2];
-      ins->AddNode(cat, ntops, new TGeoTranslation(xin, yin, z));
-    }
-  }
-  //Al top
-  z = -pinstart[2] + pal[2];
-  ins->AddNode(altop, 1, new TGeoTranslation(0, 0, z));
-
-  // MCP
+//
+//   //wrapped radiator +  reflecting layers
+//
+//   Int_t ntops = 0, nrfvs = 0, nrfhs = 0;
+//   //  Float_t yin = 0, xinv = 0, yinv = 0;
+//   x = y = z = 0;
+//   topref->AddNode(top, 1, new TGeoTranslation(0, 0, 0));
+//   float xinv = -ptop[0] - prfv[0];
+//   topref->AddNode(rfv, 1, new TGeoTranslation(xinv, 0, 0));
+//   printf(" GEOGEO  refv %f ,  0,0 \n", xinv);
+//   xinv = ptop[0] + prfv[0];
+//   topref->AddNode(rfv, 2, new TGeoTranslation(xinv, 0, 0));
+//   printf(" GEOGEO  refv %f ,  0,0 \n", xinv);
+//   float yinv = -ptop[1] - prfh[1];
+//   topref->AddNode(rfh, 1, new TGeoTranslation(0, yinv, 0));
+//   printf(" GEOGEO  refh  ,  0, %f, 0 \n", yinv);
+//   yinv = ptop[1] + prfh[1];
+//   topref->AddNode(rfh, 2, new TGeoTranslation(0, yinv, 0));
+//   //  zin = -ptop[2] - ptopblack[2];
+//   //  printf(" GEOGEO  refh  ,  0, 0, %f \n", zin);
+//   //  topref->AddNode(topblack, 1, new TGeoTranslation(0, 0, zin));
+//
+//   //container for radiator, cathode
+//   for (Int_t ix = 0; ix < 2; ix++) {
+//     float xin = -pinstart[0] + 0.3 + (ix + 0.5) * 2 * ptopref[0];
+//     for (Int_t iy = 0; iy < 2; iy++) {
+//       z = -pinstart[2] + 2 * pal[2] + ptopref[2];
+//       float yin = -pinstart[1] + 0.3 + (iy + 0.5) * 2 * ptopref[1];
+//       ntops++;
+//       ins->AddNode(topref, ntops, new TGeoTranslation(xin, yin, z));
+//       z += ptopref[2] + 2. * pmcptopglass[2] + preg[2];
+//       ins->AddNode(cat, ntops, new TGeoTranslation(xin, yin, z));
+//     }
+//   }
+//   //Al top
+//   z = -pinstart[2] + pal[2];
+//   ins->AddNode(altop, 1, new TGeoTranslation(0, 0, z));
+//
+//   // MCP
 //   TVirtualMC::GetMC()->Gsvolu("0MTO", "BOX", getMediumID(kOpGlass), pmcptopglass, 3); //Op  Glass
 //   TGeoVolume* mcptop = gGeoManager->GetVolume("0MTO");
-
-  TGeoBBox* mcptopBox = new TGeoBBox("BOX", pmcptopglass[0], pmcptopglass[1], pmcptopglass[2]);
-  TGeoVolume* mcptop = new TGeoVolume("0MTO", mcptopBox, alMed);
-
-  z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + pmcptopglass[2];
-  ins->AddNode(mcptop, 1, new TGeoTranslation(0, 0, z));
+//   z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + pmcptopglass[2];
+//   ins->AddNode(mcptop, 1, new TGeoTranslation(0, 0, z));
 //
-  // TVirtualMC::GetMC()->Gsvolu("0MCP", "BOX", getMediumID(kAir), pmcp, 3); //glass
+//   TVirtualMC::GetMC()->Gsvolu("0MCP", "BOX", getMediumID(kAir), pmcp, 3); //glass
 //   TGeoVolume* mcp = gGeoManager->GetVolume("0MCP");
-  TGeoBBox* mcpBox = new TGeoBBox("BOX", pmcp[0], pmcp[1], pmcp[2]);
-  TGeoVolume* mcp = new TGeoVolume("0MCP", mcpBox, alMed);
-
-  z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + 2 * pmcptopglass[2] + 2 * preg[2] + pmcp[2];
-  ins->AddNode(mcp, 1, new TGeoTranslation(0, 0, z));
-
+//   z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + 2 * pmcptopglass[2] + 2 * preg[2] + pmcp[2];
+//   ins->AddNode(mcp, 1, new TGeoTranslation(0, 0, z));
 //   TVirtualMC::GetMC()->Gsvolu("0MIN", "BOX", getMediumID(kGlass), pmcpinner, 3); //glass
 //   TGeoVolume* mcpinner = gGeoManager->GetVolume("0MIN");
-  TGeoBBox* mcpinnerBox = new TGeoBBox("BOX", pmcpinner[0], pmcpinner[1], pmcpinner[2]);
-  TGeoVolume* mcpinner = new TGeoVolume("0MIN", mcpinnerBox, alMed);
-
-  mcp->AddNode(mcpinner, 1, new TGeoTranslation(0, 0, 0));
-
+//   mcp->AddNode(mcpinner, 1, new TGeoTranslation(0, 0, 0));
+//
 //   TVirtualMC::GetMC()->Gsvolu("0MSI", "BOX", getMediumID(kGlass), pmcpside, 3); //glass
 //   TGeoVolume* mcpside = gGeoManager->GetVolume("0MSI");
-  TGeoBBox* mcpSideBox = new TGeoBBox("BOX", pmcpside[0], pmcpside[1], pmcpside[2]);
-  TGeoVolume* mcpside = new TGeoVolume("0MSI", mcpSideBox, alMed);
-
-  x = -pmcp[0] + pmcpside[0];
-  y = -pmcp[1] + pmcpside[1];
-  mcp->AddNode(mcpside, 1, new TGeoTranslation(x, y, 0));
-  x = pmcp[0] - pmcpside[0];
-  y = pmcp[1] - pmcpside[1];
-  mcp->AddNode(mcpside, 2, new TGeoTranslation(x, y, 0));
-  x = -pmcp[1] + pmcpside[1];
-  y = -pmcp[0] + pmcpside[0];
-  mcp->AddNode(mcpside, 3, new TGeoCombiTrans(x, y, 0, new TGeoRotation("R2", 90, 0, 0)));
-  x = pmcp[1] - pmcpside[1];
-  y = pmcp[0] - pmcpside[0];
-  mcp->AddNode(mcpside, 4, new TGeoCombiTrans(x, y, 0, new TGeoRotation("R2", 90, 0, 0)));
-
+//   x = -pmcp[0] + pmcpside[0];
+//   y = -pmcp[1] + pmcpside[1];
+//   mcp->AddNode(mcpside, 1, new TGeoTranslation(x, y, 0));
+//   x = pmcp[0] - pmcpside[0];
+//   y = pmcp[1] - pmcpside[1];
+//   mcp->AddNode(mcpside, 2, new TGeoTranslation(x, y, 0));
+//   x = -pmcp[1] + pmcpside[1];
+//   y = -pmcp[0] + pmcpside[0];
+//   mcp->AddNode(mcpside, 3, new TGeoCombiTrans(x, y, 0, new TGeoRotation("R2", 90, 0, 0)));
+//   x = pmcp[1] - pmcpside[1];
+//   y = pmcp[0] - pmcpside[0];
+//   mcp->AddNode(mcpside, 4, new TGeoCombiTrans(x, y, 0, new TGeoRotation("R2", 90, 0, 0)));
+//
 //   TVirtualMC::GetMC()->Gsvolu("0MBA", "BOX", getMediumID(kCeramic), pmcpbase, 3); //glass
 //   TGeoVolume* mcpbase = gGeoManager->GetVolume("0MBA");
-  TGeoBBox* mcpBaseBox = new TGeoBBox("BOX", pmcpbase[0], pmcpbase[1], pmcpbase[2]);
-  TGeoVolume* mcpbase = new TGeoVolume("0MBA", mcpBaseBox, alMed);
-
-  z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + pmcptopglass[2] + 2 * pmcp[2] + pmcpbase[2];
-  ins->AddNode(mcpbase, 1, new TGeoTranslation(0, 0, z));
+//   z = -pinstart[2] + 2 * pal[2] + 2 * ptopref[2] + pmcptopglass[2] + 2 * pmcp[2] + pmcpbase[2];
+//   ins->AddNode(mcpbase, 1, new TGeoTranslation(0, 0, z));
 
 
 
@@ -398,51 +346,47 @@ void standalone() {
   TGeoTranslation* plateTr3 = new TGeoTranslation("plateTr3", sPlateSpacing, 0, 0);
   plateTr3->RegisterYourself();
 
-  Float_t plate_zshift = -5;
   // define transformations for the plateGroups (6 basicPlates and 6 cablePlates)
-  TGeoTranslation* plateGroupTr1 = new TGeoTranslation("plateGroupTr1", sPlateDisplacementX, sPlateDisplacementY - sYoffset, sPlateGroupZ + plate_zshift);
+  TGeoTranslation* plateGroupTr1 = new TGeoTranslation("plateGroupTr1", sPlateDisplacementX, sPlateDisplacementY - sYoffset, sPlateGroupZ -5);
   plateGroupTr1->RegisterYourself();
 
   // TODO: 11/12 is this the place that the z-mismatch comes from?
   // TGeoCombiTrans* plateGroupTr2 = new TGeoCombiTrans("plateGroupTr2", 10.4358 + 1.5 * sPlateDisplacementDeltaY + sXoffset, -7.0747, sPlateGroupZ + sYoffset, new TGeoRotation("plateGroup2Rotation", -90, 0, 0));
-  TGeoCombiTrans* plateGroupTr2 = new TGeoCombiTrans("plateGroupTr2", 10.4358 + 1.5 * sPlateDisplacementDeltaY, -7.0747 - sYoffset, sPlateGroupZ + plate_zshift, new TGeoRotation("plateGroup2Rotation", -90, 0, 0));
+  TGeoCombiTrans* plateGroupTr2 = new TGeoCombiTrans("plateGroupTr2", 10.4358 + 1.5 * sPlateDisplacementDeltaY, -7.0747 - sYoffset, sPlateGroupZ -5, new TGeoRotation("plateGroup2Rotation", -90, 0, 0));
   plateGroupTr2->RegisterYourself();
 
-
-  Float_t zShift = -5;
-
   // position of the two rectangles used to approximate the frame
-  TGeoTranslation* frameTr1 = new TGeoTranslation("frameTr1", sFrame1PosX, sFrame1PosY, 0 + zShift);
+  TGeoTranslation* frameTr1 = new TGeoTranslation("frameTr1", sFrame1PosX, sFrame1PosY, 0);
   frameTr1->RegisterYourself();
-  TGeoTranslation* frameTr2 = new TGeoTranslation("frameTr2", sFrame2PosX, sFrame2PosY, 0 + zShift);
+  TGeoTranslation* frameTr2 = new TGeoTranslation("frameTr2", sFrame2PosX, sFrame2PosY, 0);
   frameTr2->RegisterYourself();
 
   // remove the two smaller rectangles from the frame
 
   // TODO Jason 11/12: Do I need to add xOffset and yOffset here? I believe I may have forgetten it
 
-  TGeoTranslation* rectTr1 = new TGeoTranslation("rectTr1", sFrame1PosX + sFrame1ExtraX1, sFrame1PosY + sFrame1ExtraY1, 0 + zShift);
+  TGeoTranslation* rectTr1 = new TGeoTranslation("rectTr1", sFrame1PosX + sFrame1ExtraX1, sFrame1PosY + sFrame1ExtraY1, 0);
   rectTr1->RegisterYourself();
 
-  TGeoTranslation* rectTr2 = new TGeoTranslation("rectTr2", sFrame1PosX + sFrame1ExtraX2, sFrame1PosY + sFrame1ExtraY2, sMountZ / 2 + zShift);
+  TGeoTranslation* rectTr2 = new TGeoTranslation("rectTr2", sFrame1PosX + sFrame1ExtraX2, sFrame1PosY + sFrame1ExtraY2, sMountZ / 2);
   rectTr2->RegisterYourself();
 
-  TGeoTranslation* rectTr3 = new TGeoTranslation("rectTr3", sFrame1PosX + sFrame1ExtraX3 - sRect3X / 2, sFrame1PosY + sFrame1ExtraY3 + sRect3Y / 2, 0 + zShift);
+  TGeoTranslation* rectTr3 = new TGeoTranslation("rectTr3", sFrame1PosX + sFrame1ExtraX3 - sRect3X / 2, sFrame1PosY + sFrame1ExtraY3 + sRect3Y / 2, 0);
   rectTr3->RegisterYourself();
 
-  TGeoTranslation* rectTr4 = new TGeoTranslation("rectTr4", sFrame1PosX + sFrame1ExtraX4, sFrame1PosY + sFrame1ExtraY4, 0 + zShift);
+  TGeoTranslation* rectTr4 = new TGeoTranslation("rectTr4", sFrame1PosX + sFrame1ExtraX4, sFrame1PosY + sFrame1ExtraY4, 0);
   rectTr4->RegisterYourself();
 
-  TGeoTranslation* rectTr5 = new TGeoTranslation("rectTr5", sFrame2PosX + sFrame2ExtraX1 - sRect5X / 2, sFrame2PosY + sFrame2ExtraY1 - sRect5Y / 2, 0 + zShift);
+  TGeoTranslation* rectTr5 = new TGeoTranslation("rectTr5", sFrame2PosX + sFrame2ExtraX1 - sRect5X / 2, sFrame2PosY + sFrame2ExtraY1 - sRect5Y / 2, 0);
   rectTr5->RegisterYourself();
 
-  TGeoTranslation* rectTr6 = new TGeoTranslation("rectTr6", sFrame2PosX + sFrame2ExtraX2 - sRect6X / 2, sFrame2PosY + sFrame2ExtraY2 + sRect6Y / 2, 0 + zShift);
+  TGeoTranslation* rectTr6 = new TGeoTranslation("rectTr6", sFrame2PosX + sFrame2ExtraX2 - sRect6X / 2, sFrame2PosY + sFrame2ExtraY2 + sRect6Y / 2, 0);
   rectTr6->RegisterYourself();
 
-  TGeoTranslation* rectTr7 = new TGeoTranslation("rectTr7", sFrame2PosX + sFrame2ExtraX3 - sRect6X - sRect7X / 2, sFrame2PosY + sFrame2ExtraY3 + sRect7Y / 2, sMountZ / 2 + zShift);
+  TGeoTranslation* rectTr7 = new TGeoTranslation("rectTr7", sFrame2PosX + sFrame2ExtraX3 - sRect6X - sRect7X / 2, sFrame2PosY + sFrame2ExtraY3 + sRect7Y / 2, sMountZ / 2);
   rectTr7->RegisterYourself();
 
-  TGeoTranslation* rectTr8 = new TGeoTranslation("rectTr8", sFrame2PosX + sXoffset + sFrame2ExtraX4 - sRect8X / 2, sFrame2PosY + sYoffset + sFrame2ExtraY4 + sRect8Y / 2, 0 + zShift);
+  TGeoTranslation* rectTr8 = new TGeoTranslation("rectTr8", sFrame2PosX + sXoffset + sFrame2ExtraX4 - sRect8X / 2, sFrame2PosY + sYoffset + sFrame2ExtraY4 + sRect8Y / 2, 0);
   rectTr8->RegisterYourself();
 
   // // old routine with hard-coded numbers
@@ -526,6 +470,7 @@ void standalone() {
 
   // subtract the extra Al
 
+  // comment back in  one by one
   frameCompositeShapeBoolean += " - rect1:rectTr1";
   frameCompositeShapeBoolean += " - rect2:rectTr2";
   frameCompositeShapeBoolean += " - rect3:rectTr3";
@@ -585,8 +530,8 @@ void standalone() {
 
 
   // Beginning of Shapes
-  // TGeoVolume *chamber = gGeoManager->MakeBox("TOP",vacMed,100,100,100);
-  // gGeoManager->SetTopVolume(chamber);
+  TGeoVolume *chamber = gGeoManager->MakeBox("TOP",vacMed,100,100,100);
+  gGeoManager->SetTopVolume(chamber);
 
   TGeoBBox* frame1 = new TGeoBBox("frame1", sFrame1X / 2, sFrame1Y / 2, sFrameZ / 2);
   TGeoBBox* frame2 = new TGeoBBox("frame2", sFrame2X / 2, sFrame2Y / 2, sFrameZ / 2);
@@ -713,23 +658,19 @@ void standalone() {
 
 
 
-  TGeoVolume* frame = new TGeoVolume("frame", new TGeoCompositeShape("frame", frameCompositeShapeBoolean.c_str()), alMed);
+  // Chamber is the mother volume
+  // TGeoVolume* frame = new TGeoVolume("frame", new TGeoCompositeShape("frame", frameCompositeShapeBoolean.c_str()), alMed);
+  //
+  // TGeoRotation* reflect = new TGeoRotation("reflect");
+  // reflect->ReflectX(true);
+  // reflect->ReflectY(true);
+  // reflect->RegisterYourself();
 
-  TGeoRotation* reflect = new TGeoRotation("reflect");
-  reflect->ReflectX(true);
-  reflect->ReflectY(true);
-  reflect->RegisterYourself();
+  // chamber->AddNode(frame, 1);
+  // chamber->AddNode(frame, 2, reflect);
 
-
-  TGeoVolume* tester1 = new TGeoVolume("tester1", frameRemovedPMTandRadiators1, alMed);
-  TGeoVolume* tester2 = new TGeoVolume("tester2", frameRemovedPMTandRadiators2, alMed);
-  // stlinA->AddNode(tester1, 1, frameTr1);
-  // stlinA->AddNode(tester2, 2, frameTr2);
-
-  stlinA->AddNode(frame, 1);
-  stlinA->AddNode(frame, 2, reflect);
   gGeoManager->CloseGeometry();
-  gGeoManager->Export("standalone.root");
+  gGeoManager->Export("rectAnnotate.root");
 
   // // make a canvas to draw on
   TCanvas *c = new TCanvas("c","c",0,0,1000,1000);
