@@ -1,0 +1,52 @@
+
+# DO NOT DELETE
+
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoManager.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TObjArray.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TSeqCollection.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TCollection.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TObject.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RConfigure.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/Rtypes.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RtypesCore.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/ROOT/RConfig.hxx
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RVersion.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/DllImport.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/snprintf.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/strlcpy.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGenericClassInfo.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TSchemaHelper.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TIsAProxy.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TVirtualIsAProxy.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TStorage.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TVersionCheck.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RVersion.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TIterator.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TString.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TMathBase.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/ROOT/RStringView.hxx
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/ROOT/TypeTraits.hxx
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/ROOT/RSpan.hxx
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/ROOT/span.hxx
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TVirtualRWMutex.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TVirtualMutex.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoNavigator.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoCache.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoNode.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoAtt.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TNamed.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoVolume.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TAttLine.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TAttFill.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TAtt3D.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoMedium.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoMaterial.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TList.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoElement.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TAttMarker.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoShape.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoPatternFinder.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoStateInfo.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TGeoMatrix.h
+./checkGeomOverlaps_C.so: /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RVersion.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RConfig.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TClass.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TDictAttributeMap.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TInterpreter.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TROOT.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TBuffer.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TMemberInspector.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TError.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/RtypesImp.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TIsAProxy.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TFileMergeInfo.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/include/TCollectionProxyInfo.h /home/alidock/.sw/slc7_x86-64/ROOT/v6-20-02-alice7-19/bin/rootcling
+checkGeomOverlaps_C__ROOTBUILDVERSION= 6.20/02

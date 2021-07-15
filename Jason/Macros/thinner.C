@@ -1,7 +1,7 @@
-#include "../Macros/Constants.h"
+#include "../temp/Constants.h"
 #include "TGeoManager.h"
 
-void cornerRoutine() {
+void thinner() {
 
   // starting a manager
   TGeoManager *mgr = new TGeoManager("manager", "standalone");
@@ -299,11 +299,19 @@ void cornerRoutine() {
   TGeoBBox* rect8 = new TGeoBBox("rect8", sRect8X / 2 + sEps, sRect8Y / 2 + sEps, sFrameZ / 2 + sEps);
 
   // PMT needs round edges
+
+  // Define a value to overcut the coincidence between the closure of the tube
+  // and the edge of the rectangle to eliminate artifacts
+  Double_t flopsErr = .00001; // cm
+  Double_t extension = 5;
+
   TGeoBBox* pmtBox = new TGeoBBox("pmtBox", sPmtSide / 2 + sEps, sPmtSide / 2 + sEps, sPmtZ / 2 + sEps);
+  // TGeoBBox* pmtCornerRect = new TGeoBBox("pmtCornerRect", sCornerRadius / 2 - flopsErr, sCornerRadius / 2 - flopsErr, sPmtZ / 2);
   TGeoBBox* pmtCornerRect = new TGeoBBox("pmtCornerRect", sCornerRadius / 2, sCornerRadius / 2, sPmtZ / 2);
   TGeoTube* pmtCornerTube = new TGeoTube("pmtCornerTube", 0, sCornerRadius + sEps, sPmtZ / 2 + sEps);
   TGeoVolume* PMTCorner = new TGeoVolume("PMTCorner", new TGeoCompositeShape("PMTCorner", pmtCornerCompositeShapeBoolean.c_str()), alMed);
-  TGeoVolume* PMT = new TGeoVolume("PMT", new TGeoCompositeShape("PMT", pmtCompositeShapeBoolean.c_str()), vacMed);
+  // TGeoVolume* PMT = new TGeoVolume("PMT", new TGeoCompositeShape("PMT", pmtCompositeShapeBoolean.c_str()), vacMed);
+  TGeoVolume* PMT = gGeoManager->MakeBox("PMT",vacMed, sPmtSide / 2 + sEps, sPmtSide / 2 + sEps, sPmtZ / 2 + sEps);
 
   // add the plates on the bottom of the frame
   TGeoBBox* basicPlate = new TGeoBBox("basicPlate", sPlateSide / 2, sPlateSide / 2, sBasicPlateZ / 2);
@@ -356,53 +364,40 @@ void cornerRoutine() {
   TGeoTranslation* pmtCornerTr4 = new TGeoTranslation("pmtCornerTr4", sPmtSide/2.,-sPmtSide/2.,0.);
   pmtCornerTr4->RegisterYourself();
 
-  // TGeoRotation* reflectX = new TGeoRotation("reflectX");
-  // reflectX->ReflectX(true);
-  // reflectX->RegisterYourself();
-  //
-  // TGeoRotation* reflectY = new TGeoRotation("reflectY");
-  // reflectY->ReflectY(true);
-  // reflectY->RegisterYourself();
-  //
-  // TGeoRotation* reflectXY = new TGeoRotation("reflectXY");
-  // reflectXY->ReflectX(true);
-  // reflectXY->ReflectY(true);
-  // reflectXY->RegisterYourself();
-  //
-  // TGeoCombiTrans* cornerRefTr2 = new TGeoCombiTrans("cornerRefTr2",  sCornerRadius/2.,-sCornerRadius/2., 0., reflectX);
-  // cornerRefTr2->RegisterYourself();
-  //
-  // TGeoCombiTrans* cornerRefTr3 = new TGeoCombiTrans("cornerRefTr3", sCornerRadius/2.,sCornerRadius/2., 0., reflectXY);
-  // cornerRefTr3->RegisterYourself();
-  //
-  // TGeoCombiTrans* cornerRefTr4 = new TGeoCombiTrans("cornerRefTr4", -sCornerRadius/2.,sCornerRadius/2., 0., reflectY);
-  // cornerRefTr4->RegisterYourself();
 
   std::vector rectTranslations = {rectCornerTr1, rectCornerTr2, rectCornerTr3, rectCornerTr4};
   std::vector pmtTranslations = {pmtCornerTr1, pmtCornerTr2, pmtCornerTr3, pmtCornerTr4};
 
-  // Define a value to overcut the coincidence between the closure of the tube
-  // and the edge of the rectangle to eliminate artifacts
-  Double_t flops = .00001; // cm
+  // // Define a value to overcut the coincidence between the closure of the tube
+  // // and the edge of the rectangle to eliminate artifacts
+  // Double_t flops = .00001; // cm
 
-  TGeoBBox* testBox = new TGeoBBox("testBox", sPmtSide/2. + sEps, sPmtSide/2. + sEps, sPmtZ/2. + sEps);
-  TGeoBBox* testRect = new TGeoBBox("testRect", sCornerRadius/2. - flops, sCornerRadius/2. - flops, sPmtZ/2.);
-  TGeoTube* testTube = new TGeoTube("testTube", 0, sCornerRadius, sPmtZ/2. + sEps);
-  TGeoTubeSeg* testTubeSeg = new TGeoTubeSeg("testTubeSeg", 0, sCornerRadius, sPmtZ/2. + sEps, -10, 100);
+//   TGeoBBox* testBox = new TGeoBBox("testBox", sPmtSide/2. + sEps, sPmtSide/2. + sEps, sPmtZ/2. + sEps);
+//   TGeoBBox* testRect = new TGeoBBox("testRect", sCornerRadius/2. - flops, sCornerRadius/2. - flops, sPmtZ/2.);
+//   TGeoTube* testTube = new TGeoTube("testTube", 0, sCornerRadius, sPmtZ/2. + sEps);
+//   TGeoTubeSeg* testTubeSeg = new TGeoTubeSeg("testTubeSeg", 0, sCornerRadius, sPmtZ/2. + sEps, -10, 100);
+//
+//   for (int i = 0; i<4; i++) {
+//
+//     TString cornerBool = Form("testRect - testTube:rectCornerTr%i", i + 1);
+//     TGeoCompositeShape* cornerCompositeShape = new TGeoCompositeShape("cornerCompositeShape", cornerBool.Data());
+//     TGeoVolume* cornerVol = new TGeoVolume("cornerVol", cornerCompositeShape, alMed);
+//
+//     chamber->AddNode(cornerVol, i, pmtTranslations[i]);
+//
+// }
 
-  for (int i = 0; i<4; i++) {
+  TGeoCompositeShape* frameShape = new TGeoCompositeShape("frameShape", frame1CompositeShapeBoolean.c_str());
+  TGeoVolume* frameVol = new TGeoVolume("frameVol", frameShape, alMed);
 
-    TString cornerBool = Form("testRect - testTube:rectCornerTr%i", i + 1);
-    TGeoCompositeShape* cornerCompositeShape = new TGeoCompositeShape("cornerCompositeShape", cornerBool.Data());
-    TGeoVolume* cornerVol = new TGeoVolume("cornerVol", cornerCompositeShape, alMed);
+  // TGeoCompositeShape* pmtShape = new TGeoCompositeShape("pmtShape", pmtCompositeShapeBoolean.c_str());
+  // TGeoVolume* pmtVol = new TGeoVolume("pmtVol", pmtShape, alMed);
 
-    chamber->AddNode(cornerVol, i, pmtTranslations[i]);
 
-}
-
+  chamber->AddNode(PMT, 1);
 
   gGeoManager->CloseGeometry();
-  gGeoManager->Export("PMTcornerRoutine.root");
+  gGeoManager->Export("thinner.root");
 
   // // make a canvas to draw on
   TCanvas *c = new TCanvas("c","c",0,0,1000,1000);
